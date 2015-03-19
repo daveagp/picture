@@ -1,0 +1,16 @@
+*.o
+drawmoc.cpp
+*~
+#*#
+draw.zip
+example
+bounce
+earth
+polygon
+sierpinski
+htree
+nestedcircles
+bull
+pulse
+coords
+polygon.png
