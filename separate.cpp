@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
    Picture bluepic(pic);
    Picture greenpic(pic);
    
-   // invert the colors
+   // separate the colors
    for (int row=0; row<pic.height(); row++)
       for (int col=0; col<pic.width(); col++) {
          Color color;
