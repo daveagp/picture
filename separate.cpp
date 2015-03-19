@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
    // invert the colors
    for (int row=0; row<pic.height(); row++)
       for (int col=0; col<pic.width(); col++) {
-         Picture::Color color;
+         Color color;
          color = pic.get(row, col);
          color.red = 0;
          color.green = 0;

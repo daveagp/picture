@@ -18,9 +18,9 @@ int main(int argc, char* argv[]) {
    // edge-finding
    for (int row=1; row<pic.height(); row++)
       for (int col=1; col<pic.width(); col++) {
-         Picture::Color color1 = pic.get(row, col);
-         Picture::Color color2 = pic.get(row-1, col-1);
-         Picture::Color newcolor;
+         Color color1 = pic.get(row, col);
+         Color color2 = pic.get(row-1, col-1);
+         Color newcolor;
          newcolor.red = (int) abs(color1.red - color2.red);
          newcolor.blue = (int) abs(color1.blue - color2.blue);
          newcolor.green = (int) abs(color1.green - color2.green);

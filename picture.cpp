@@ -41,7 +41,7 @@ Picture::~Picture() {
    delete[] data;
 }
 
-Picture::Color Picture::get(int row, int col) {
+Color Picture::get(int row, int col) {
    if (row < 0 || row >= _height)
       throw runtime_error("Row out of bounds: " + itoa(row));
    if (col < 0 || col >= _width)
@@ -163,6 +163,7 @@ int Picture::rowlen(int width) {
    return result;
 }
 
+// BMPs are stored in a funny order
 Picture::uint8* Picture::bgr(int row, int col) {
    return data + (_height-row-1)*rowlen(_width) + RGB*col;
 }
@@ -187,8 +188,7 @@ void Picture::show(bool new_window) {
    command += " &";
    int result = system(command.c_str());
    
-   if (result != 0)
-      throw runtime_error("Picture::show couldn't call eog");
+   if (result != 0) throw runtime_error("Picture::show couldn't call eog");
 
    // wait longer on the first show, OS takes time to start eog
    if (shows == 0) sleep(1);

@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
       for (int col=0; col<pic.width(); col++) {
          int srcrow = (row - pic.width()/2)/2 + pic.width()/2;
          int srccol = (col - pic.height()/2)/2 + pic.height()/2;
-         Picture::Color color = pic.get(srcrow, srccol);
+         Color color = pic.get(srcrow, srccol);
          newpic.set(row, col, color);
       }
    

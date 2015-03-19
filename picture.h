@@ -3,15 +3,11 @@
 
 #include <string>
 
+struct Color; // see end of this file
+
 class Picture {
 
-public: // use Picture::Color to contain color data
-struct Color {
-   int red;
-   int green;
-   int blue;
-};
-
+public: 
 // construct an all-black picture of the given height and width
 Picture(int height, int width);
 // create a deep copy of a picture
@@ -22,9 +18,9 @@ Picture(const char filename[]);
 int height();
 int width();
 // get color at a particular location. needs 0<=row<height, 0<=col<width
-Picture::Color get(int row, int col);
+Color get(int row, int col);
 // set color at a particulat location. needs 0<=row<height, 0<=col<width
-void set(int row, int col, Picture::Color new_color);
+void set(int row, int col, Color new_color);
 // show this picture. should it open in a new window? (default, no)
 void show(bool new_window = false);
 // save this picture to a .BMP file
@@ -34,29 +30,38 @@ void save(const char filename[]);
 
 
 private:
-// data members
+// data members and implementation details
 int _width;
 int _height;
 typedef unsigned char uint8;
 uint8* data;
 int _rowlen;
+
 uint8* bgr(int row, int col);
-
-// implementation details
-typedef unsigned short int uint16;
-typedef unsigned int uint32;
-
-static std::string itoa(int i);
-static int rowlen(int width);
-static int shows;
-
-uint8* header_append(uint8* hdr, int bytes, uint32 value);
 
 static const int RGB = 3;
 static const int BMP_HEADER_SIZE = 0x36;
 static const int HEADER_DIMENSIONS_OFFSET = 0x12;
 static const int DIB_SUBHEADER_SIZE = 0x28;
 
+static int shows;
+
+static std::string itoa(int i);
+static int rowlen(int width);
+typedef unsigned int uint32;
+static uint8* header_append(uint8* hdr, int bytes, uint32 value);
 };
+
+#ifndef CS103_COLOR
+#define CS103_COLOR
+struct Color {
+   int red;
+   int green;
+   int blue;
+   Color() {} // uninitialized color
+   Color(int r, int g, int b) {red = r; green = g; blue = b;}
+   bool same_as(Color c) {return red==c.red && green==c.green && blue==c.blue;}
+};
+#endif
 
 #endif

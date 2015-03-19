@@ -17,7 +17,7 @@ int main(int argc, char* argv[]) {
    // tile the pixels
    for (int row=0; row<pic.height(); row++)
       for (int col=0; col<pic.width(); col++) {
-         Picture::Color color = pic.get(row*2%pic.height(), col*2%pic.width());
+         Color color = pic.get(row*2%pic.height(), col*2%pic.width());
          newpic.set(row, col, color);
       }
    

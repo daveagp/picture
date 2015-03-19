@@ -14,7 +14,7 @@ int main(int argc, char* argv[]) {
    // convert the colors to grayscale
    for (int row=0; row<pic.height(); row++)
       for (int col=0; col<pic.width(); col++) {
-         Picture::Color color = pic.get(row, col);
+         Color color = pic.get(row, col);
          double luminance = 0.299*color.red 
             + 0.587*color.green + 0.114*color.blue;
          color.red = (int)luminance;

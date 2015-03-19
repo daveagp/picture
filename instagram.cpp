@@ -14,8 +14,8 @@ int main(int argc, char* argv[]) {
    // shift the color components
    for (int row=0; row<pic.height(); row++)
       for (int col=0; col<pic.width(); col++) {
-         Picture::Color color = pic.get(row, col);
-         Picture::Color newcolor;
+         Color color = pic.get(row, col);
+         Color newcolor;
          newcolor.red = color.green;
          newcolor.green = color.blue;
          newcolor.blue = color.red;
