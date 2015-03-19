@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) {
          int g = ____;
          int b = ____;
 
-         redpic.set(row, col, Color(red, 0, 0));
+         redpic.set(row, col, Color(r, 0, 0));
          greenpic._____;
          bluepic._____;
       }
