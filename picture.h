@@ -11,7 +11,7 @@ public:
 // construct an all-black picture of the given height and width
 Picture(int height, int width);
 // create a deep copy of a picture
-Picture(Picture& p);
+Picture(const Picture& p);
 // open a .BMP file and copy it into a new Picture object
 Picture(const char filename[]);
 // get dimensions of a picture
@@ -25,8 +25,10 @@ void set(int row, int col, Color new_color);
 void show(bool new_window = false);
 // save this picture to a .BMP file
 void save(const char filename[]);
-// destructor
+// for technical reasons: destructor
 ~Picture();
+// for technical reasons: assignment operator
+Picture& operator=(const Picture& p);
 
 
 private:

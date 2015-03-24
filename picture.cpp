@@ -28,13 +28,25 @@ Picture::Picture(int h, int w) {
       data[i] = 0;
 }
 
-Picture::Picture(Picture& p) {
+Picture::Picture(const Picture& p) {
    _width = p._width;
    _height = p._height;
    _rowlen = rowlen(_width);
    data = new uint8[_height*_rowlen];
    for (int i=0; i<_height*_rowlen; i++)
       data[i] = p.data[i];
+}
+
+// destructor followed by copy constructor and return self
+Picture& Picture::operator=(const Picture& p) {
+   delete data;
+   _width = p._width;
+   _height = p._height;
+   _rowlen = rowlen(_width);
+   data = new uint8[_height*_rowlen];
+   for (int i=0; i<_height*_rowlen; i++)
+      data[i] = p.data[i];
+   return *this;
 }
 
 Picture::~Picture() {
