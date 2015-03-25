@@ -1,5 +1,20 @@
-Lightweight beginner-friendly C++ class for working with BMP files
+This is a lightweight beginner-friendly C++ class for working with BMP files
 
-For documentation, visit:
-
+DOCUMENTATION:
 http://bits.usc.edu/cs103/picture/
+
+INSTALLATION:
+Once downloaded, run "make picture.o" to create the library. 
+Then, use it with picture.h to create programs. There are several
+examples included in this repository ("make all" or "make invert" etc).
+
+SAMPLE ASSIGNMENT: 
+http://bits.usc.edu/cs103/coursework/lfsr/
+This is a translation to C++ of an assignment by Bob Sedgewick.
+
+THANKS:
+This library is inspired by Picture.java by Sedgewick & Wayne.
+http://introcs.cs.princeton.edu/java/stdlib/
+
+CONTACT:
+Dave Pritchard, daveagp@gmail.com
