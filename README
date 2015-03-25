@@ -13,7 +13,8 @@ http://bits.usc.edu/cs103/coursework/lfsr/
 This is a translation to C++ of an assignment by Bob Sedgewick.
 
 THANKS:
-This library is inspired by Picture.java by Sedgewick & Wayne.
+Thanks to Mark Redekopp whose "bmplib" library is precursor to this one.
+This class's API is inspired by Picture.java by Sedgewick & Wayne.
 http://introcs.cs.princeton.edu/java/stdlib/
 
 CONTACT:
