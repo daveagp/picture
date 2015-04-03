@@ -10,7 +10,7 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
    if (argc != 2) {
-      cout << "Usage: separate infile.bmp" << endl;
+      cout << "Usage: colsep infile.bmp" << endl;
       return 1;
    }
 
