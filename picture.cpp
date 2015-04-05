@@ -187,8 +187,13 @@ string Picture::itoa(int i) {
 }
 
 int Picture::shows = 0;
+bool Picture::headless = false;
 
 void Picture::show(bool new_window) {
+   if (headless) {
+      save("lastshow.bmp");
+      return;
+   }
    string filename = "/tmp/picture";
    if (new_window)
       filename += itoa(shows);

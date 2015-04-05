@@ -52,6 +52,8 @@ static std::string itoa(int i);
 static int rowlen(int width);
 typedef unsigned int uint32;
 static uint8* header_append(uint8* hdr, int bytes, uint32 value);
+public:
+ static bool headless; // default, no. yes: show() -> save("lastshow.bmp")
 };
 
 #ifndef CS103_COLOR
