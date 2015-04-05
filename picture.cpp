@@ -187,7 +187,12 @@ string Picture::itoa(int i) {
 }
 
 int Picture::shows = 0;
-bool Picture::headless = false;
+bool Picture::headless = 
+#ifdef HEADLESS
+   true;
+#else
+   false;
+#endif
 
 void Picture::show(bool new_window) {
    if (headless) {
