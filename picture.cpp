@@ -39,7 +39,7 @@ Picture::Picture(const Picture& p) {
 
 // destructor followed by copy constructor and return self
 Picture& Picture::operator=(const Picture& p) {
-   delete data;
+   delete[] data;
    _width = p._width;
    _height = p._height;
    _rowlen = rowlen(_width);
