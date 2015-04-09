@@ -1,4 +1,5 @@
 #include "picture.h"
+#include "jpgd.h"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -8,6 +9,7 @@
 #include <sstream>
 #include <string>
 #include <cstring>
+#include <cctype>
 
 using namespace std;
 
@@ -84,26 +86,60 @@ void Picture::set(int row, int col, Color new_color) {
 }
 
 Picture::Picture(const char filename[]) {
-   FILE* file = fopen(filename, "rb");
-   if (!file)
-      throw runtime_error("Cannot open file: " + string(filename));
+   const char* last4 = filename + strlen(filename) - 4;
+   if (strlen(filename) < 4)
+      last4 = "----";
+   
+   if (last4[0]=='.' && toupper(last4[1])=='B' && toupper(last4[2])=='M'
+       && toupper(last4[3])=='P') {
 
-   char initialbytes[2];
-   fread(initialbytes, sizeof(char), 2, file);
-   if (initialbytes[0] != 'B' || initialbytes[1] != 'M')
-      throw runtime_error("Not a BMP file");
+      FILE* file = fopen(filename, "rb");
+      if (!file)
+         throw runtime_error("Cannot open file: " + string(filename));
       
-   fseek(file, HEADER_DIMENSIONS_OFFSET, SEEK_SET);   
-   uint32 dimensions[2];
-   fread(dimensions, sizeof(uint32), 2, file);
-   _width = dimensions[0];
-   _height = dimensions[1];
-   _rowlen = rowlen(_width);
-
-   fseek(file, BMP_HEADER_SIZE, SEEK_SET);   
-   data = new uint8[_height*_rowlen];
-   fread(data, sizeof(uint8), _height*_rowlen, file);
-   fclose(file);
+      char initialbytes[2];
+      fread(initialbytes, sizeof(char), 2, file);
+      if (initialbytes[0] != 'B' || initialbytes[1] != 'M')
+         throw runtime_error("Not a BMP file");
+      
+      fseek(file, HEADER_DIMENSIONS_OFFSET, SEEK_SET);   
+      uint32 dimensions[2];
+      fread(dimensions, sizeof(uint32), 2, file);
+      _width = dimensions[0];
+      _height = dimensions[1];
+      _rowlen = rowlen(_width);
+      
+      fseek(file, BMP_HEADER_SIZE, SEEK_SET);   
+      data = new uint8[_height*_rowlen];
+      fread(data, sizeof(uint8), _height*_rowlen, file);
+      fclose(file);
+   }
+   else if (last4[0]=='.' && toupper(last4[1])=='J' && toupper(last4[2])=='P'
+            && toupper(last4[3])=='G') {
+      int planes;
+      unsigned char* packed_data = jpgd::decompress_jpeg_image_from_file
+         (filename, &_width, &_height, &planes, RGB);
+      if (planes != RGB)
+         throw runtime_error("Need RGB .jpg: " + string(filename));
+      _rowlen = rowlen(_width);
+      data = new uint8[_height*_rowlen];
+      memset(data, 0, _height*_rowlen); // fill in between rows
+      // move bytes into bmp's weird order
+      for (int r=0; r<_height; r++) {
+         unsigned char* src = packed_data + _width*RGB*r;
+         unsigned char* dest = bgr(r, 0);
+         for (int c=0; c<_width; c++) {
+            dest[0] = src[2]; // B
+            dest[1] = src[1]; // G
+            dest[2] = src[0]; // R
+            src += RGB;
+            dest += RGB;
+         }
+      }
+      delete[] packed_data;
+   }
+   else 
+      throw runtime_error("Need .bmp or .jpg extension: " + string(filename));
 }
 
 void Picture::save(const char filename[]) {

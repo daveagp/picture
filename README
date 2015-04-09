@@ -16,6 +16,8 @@ THANKS:
 Thanks to Mark Redekopp whose "bmplib" library is precursor to this one.
 This class's API is inspired by Picture.java by Sedgewick & Wayne.
 http://introcs.cs.princeton.edu/java/stdlib/
+Includes Rich Geldreich's JPG decompressor from
+https://code.google.com/p/jpeg-compressor/
 
 CONTACT:
 Dave Pritchard, daveagp@gmail.com

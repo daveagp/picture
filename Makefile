@@ -19,17 +19,20 @@ EXAMPLES = invert grayscale instagram separate tile zoom glass edges scale
 
 all: picture.o $(EXAMPLES)
 
+jpgd.o: jpgd.cpp jpgd.h
+	$(CC) -Wno-shadow -Wno-unused-const-variable jpgd.cpp -c
+
 picture.o: picture.h picture.cpp
 	$(PATCH)
 	$(CC) picture.cpp -c
 
 %: %.cpp picture.o picture.h
-	$(CC) $@.cpp picture.o $(FLAGS) -o $@
+	$(CC) $@.cpp picture.o jpgd.o $(FLAGS) -o $@
 
 clean:
-	rm -f picture.o $(EXAMPLES)
+	rm -f picture.o jpgd.o $(EXAMPLES)
 
 zip:
 	rm -f picture.zip
-	zip -r picture.zip *.cpp picture.h Makefile fruit.bmp
+	zip -r picture.zip *.cpp picture.h jpgd.h Makefile fruit.bmp
 
