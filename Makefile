@@ -21,7 +21,7 @@ all: picture.o $(EXAMPLES)
 
 picture.o: picture.h picture.cpp jpgd.cpp jpgd.h
 	$(PATCH)
-	$(CC) -Wno-shadow -Wno-unused-const-variable picture.cpp -c
+	$(CC) -Wno-shadow -Wno-unused-const-variable -Wno-unreachable-code picture.cpp -c
 
 %: %.cpp picture.o picture.h
 	$(CC) $@.cpp picture.o $(FLAGS) -o $@
