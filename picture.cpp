@@ -1,5 +1,6 @@
 #include "picture.h"
-#include "jpgd.h"
+// 'unity build' - include cpp so we just have one object
+#include "jpgd.cpp"
 
 #include <stdio.h>
 #include <unistd.h>
