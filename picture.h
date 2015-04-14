@@ -13,7 +13,7 @@ Picture(int height, int width);
 // create a deep copy of a picture
 Picture(const Picture& p);
 // open a .BMP file and copy it into a new Picture object
-Picture(const char filename[]);
+explicit Picture(const char filename[]);
 // get dimensions of a picture
 int height();
 int width();
