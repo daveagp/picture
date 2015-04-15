@@ -96,7 +96,7 @@ Picture::Picture(const char filename[]) {
 
       FILE* file = fopen(filename, "rb");
       if (!file)
-         throw runtime_error("Cannot open file: " + string(filename));
+         throw runtime_error("Cannot open file: " + nice(filename));
       
       char initialbytes[2];
       fread(initialbytes, sizeof(char), 2, file);
@@ -121,7 +121,7 @@ Picture::Picture(const char filename[]) {
       unsigned char* packed_data = jpgd::decompress_jpeg_image_from_file
          (filename, &_width, &_height, &planes, RGB);
       if (planes != RGB)
-         throw runtime_error("Need RGB .jpg: " + string(filename));
+         throw runtime_error("Need RGB .jpg: " + nice(filename));
       _rowlen = rowlen(_width);
       data = new uint8[_height*_rowlen];
       memset(data, 0, _height*_rowlen); // fill in between rows
@@ -140,7 +140,7 @@ Picture::Picture(const char filename[]) {
       delete[] packed_data;
    }
    else 
-      throw runtime_error("Need .bmp or .jpg extension: " + string(filename));
+      throw runtime_error("Need .bmp or .jpg extension: " + nice(filename));
 }
 
 void Picture::save(const char filename[]) {
@@ -149,7 +149,7 @@ void Picture::save(const char filename[]) {
       !(filename[n-3]=='B'||filename[n-3]=='b') ||
       !(filename[n-2]=='M'||filename[n-2]=='m') ||
       !(filename[n-1]=='P'||filename[n-1]=='p'))
-      throw runtime_error("Filename must end with .bmp: " + string(filename));
+      throw runtime_error("Filename must end with .bmp: " + nice(filename));
 
    // write header to a buffer first
    uint8 hdr[54];
@@ -190,7 +190,7 @@ void Picture::save(const char filename[]) {
    FILE* file = fopen(filename, "wb");
    // write result bmp file
    if (!file)
-      throw runtime_error("Cannot open file: " + string(filename));
+      throw runtime_error("Cannot open file: " + nice(filename));
    fwrite(hdr, sizeof(unsigned char), BMP_HEADER_SIZE, file);
    fwrite(data, sizeof(unsigned char), _height*_rowlen, file);
    fclose(file);
@@ -221,6 +221,11 @@ string Picture::itoa(int i) {
    ostringstream oss;
    oss << i;
    return oss.str();
+}
+
+string Picture::nice(const char cstring[]) {
+   if (cstring != NULL) return cstring; // implicit conversion
+   return "NULL";
 }
 
 int Picture::shows = 0;
