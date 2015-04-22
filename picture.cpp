@@ -137,7 +137,7 @@ Picture::Picture(const char filename[]) {
             dest += RGB;
          }
       }
-      delete[] packed_data;
+      free(packed_data);
    }
    else 
       throw runtime_error("Need .bmp or .jpg extension: " + nice(filename));
